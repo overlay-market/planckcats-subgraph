@@ -8,6 +8,7 @@ dataSources:
     source:
       address: "0xc9B28946144E3A0e02fcC119a622E30565916784"
       abi: PlanckCats
+      startBlock: 4746000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
