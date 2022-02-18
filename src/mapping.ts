@@ -5,8 +5,8 @@ import {
   RoleGranted as RoleGrantedEvent,
   RoleRevoked as RoleRevokedEvent,
   Transfer as TransferEvent,
-  PlanckCats as PlanckCatsMinterContract,
-} from "../generated/PlanckCats/PlanckCats"
+  PlanckCatsToken as PlanckCatsMinterContract,
+} from "../generated/PlanckCatsToken/PlanckCatsToken"
 import {
   Approval,
   ApprovalForAll,
