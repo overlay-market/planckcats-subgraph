@@ -3,11 +3,11 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: PlanckCats
+    name: PlanckCatsToken
     network: arbitrum-one
     source:
       address: "0xc9B28946144E3A0e02fcC119a622E30565916784"
-      abi: PlanckCats
+      abi: PlanckCatsToken
       startBlock: 4746000
     mapping:
       kind: ethereum/events
@@ -21,8 +21,8 @@ dataSources:
         - RoleRevoked
         - Transfer
       abis:
-        - name: PlanckCats
-          file: ./abis/PlanckCats.json
+        - name: PlanckCatsToken
+          file: ./abis/PlanckCatsToken.json
       eventHandlers:
         - event: Approval(indexed address,indexed address,indexed uint256)
           handler: handleApproval
