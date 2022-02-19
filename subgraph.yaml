@@ -50,18 +50,14 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - Approval
-        - ApprovalForAll
-        - RoleAdminChanged
-        - RoleGranted
-        - RoleRevoked
-        - Transfer
+        - Claim
+        - Mint
       abis:
         - name: PlanckCatsMinter
           file: ./abis/PlanckCatsMinter.json
       eventHandlers:
-        - event: Claim(address, uint256)
+        - event: Claim(indexed address,uint256)
           handler: handleClaim
-        - event: Mint(address, uint256)
+        - event: Mint(indexed address,uint256)
           handler: handleMint
       file: ./src/mapping.ts
