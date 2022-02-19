@@ -37,3 +37,31 @@ dataSources:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
       file: ./src/mapping.ts
+
+  - kind: ethereum
+    name: PlanckCatsMinter
+    network: arbitrum-one
+    source:
+      address: "0x2A2e181Cc177974c5D013240C34E1dEf1A3CC31a"
+      abi: PlanckCatsMinter
+      startBlock: 4746000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ApprovalForAll
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
+        - Transfer
+      abis:
+        - name: PlanckCatsMinter
+          file: ./abis/PlanckCatsMinter.json
+      eventHandlers:
+        - event: Claim(address, uint256)
+          handler: handleClaim
+        - event: Mint(address, uint256)
+          handler: handleMint
+      file: ./src/mapping.ts
