@@ -11,7 +11,7 @@ type Block @entity {
   transactions: [Transaction!] @derivedFrom(field: "block")
 
   # chain transaction info
-  transactionsMeta: [TransactionsMeta!] @derivedFrom(field: "block")
+  transactionsMeta: [TransactionMeta!] @derivedFrom(field: "block")
 }
 
 type TransactionMeta @entity {
@@ -58,10 +58,10 @@ type Account @entity {
   address: Bytes
 
   # account owned tokens
-  tokens: [Token!]! @derivedFrom(field: "owner")
+  tokens: [ERC721Token!]! @derivedFrom(field: "owner")
 
   # approved tokens
-  approved: [Token!]! @derivedFrom(field: "from")
+  approved: [ERC721Token!]! @derivedFrom(field: "approval")
 
   # transactions sent from this account
   sent: [Transaction!] @derivedFrom(field: "from")
@@ -101,7 +101,7 @@ type Mint implements Transaction @entity {
   to: Account
 
   # token minted
-  token: Token
+  token: ERC721Token
 
   # minting block
   block: Block!
@@ -120,7 +120,7 @@ type Transfer implements Transaction @entity {
   to: Account
 
   # token traded
-  token: Token
+  token: ERC721Token
 
   # transfer block
   block: Block!
