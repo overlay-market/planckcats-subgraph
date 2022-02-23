@@ -6,7 +6,9 @@ import {
 } from "../../generated/PlanckCatsMinter/PlanckCatsMinter";
 
 import { 
-  blocks
+  blocks,
+  transactions,
+  transactionsMeta
 } from "../modules";
 
 export function handleMint(event: Mint): void {
@@ -28,8 +30,8 @@ export function handleMint(event: Mint): void {
 	)
 	meta.save()
 
-	let to = event.params._to.toHex()
-	let tokenId = event.params._tokenId.toHex()
+	let to = event.params.to.toHex()
+	let tokenId = event.params.id.toHex()
 
 	token.save()
 }
