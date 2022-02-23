@@ -32,3 +32,99 @@ type TransactionMeta @entity {
   # transaction gas price
   gasPrice: BigInt
 }
+
+type ERC721Token @entity {
+  # tokenId used for indexation
+  id: ID!
+
+  # token's current owner
+  owner: Account!
+
+  # token's current approval
+  approval: Account
+}
+
+type TokenCounter @entity {
+  id: ID!
+
+  # track total supply of minted ERC721 tokens
+  totalSupply: BigInt!
+}
+
+type Account @entity {
+  id: ID!
+
+  # account evm address
+  address: Bytes
+
+  # account owned tokens
+  tokens: [Token!]! @derivedFrom(field: "owner")
+
+  # approved tokens
+  approved: [Token!]! @derivedFrom(field: "from")
+
+  # transactions sent from this account
+  sent: [Transaction!] @derivedFrom(field: "from")
+
+  # transactions received by this account
+  received: [Transaction!] @derivedFrom(field: "to")
+}
+
+enum TransactionType {
+  MINT
+  TRANSFER
+}
+
+interface Transaction {
+  id: ID!
+
+  # sender account
+  from: Account
+
+  # receipient account
+  to: Account
+
+  # transaction type
+  type: TransactionType!
+
+  # transaction block
+  block: Block!
+}
+
+type Mint implements Transaction @entity {
+  id: ID!
+
+  # sender account
+  from: Account
+
+  # receipient account
+  to: Account
+
+  # token minted
+  token: Token
+
+  # minting block
+  block: Block!
+
+  # transaction type
+  type: TransactionType!
+}
+
+type Transfer implements Transaction @entity {
+  id: ID!
+
+  # sender account
+  from: Account
+
+  # receipient account
+  to: Account
+
+  # token traded
+  token: Token
+
+  # transfer block
+  block: Block!
+
+  # transaction type
+  type: TransactionType!
+}
