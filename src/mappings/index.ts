@@ -1,77 +1,32 @@
-import {
-  Approval as ApprovalEvent,
-  ApprovalForAll as ApprovalForAllEvent,
-  RoleAdminChanged as RoleAdminChangedEvent,
-  RoleGranted as RoleGrantedEvent,
-  RoleRevoked as RoleRevokedEvent,
-  Transfer as TransferEvent,
-  PlanckCatsToken as PlanckCatsMinterContract,
-} from "../../generated/PlanckCatsToken/PlanckCatsToken"
+import { ZERO_ADDRESS } from "./constants";
 import {
   Approval,
-  ApprovalForAll,
-  RoleAdminChanged,
-  RoleGranted,
-  RoleRevoked,
-  Transfer
-} from "../../generated/schema"
+  Transfer,
+  Mint,
+  Claim,
+} from "../../generated/PlanckCatsMinter/PlanckCatsMinter";
 
-export function handleApproval(event: ApprovalEvent): void {
-  let entity = new Approval(
-    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
-  )
-  entity.owner = event.params.owner
-  entity.approved = event.params.approved
-  entity.tokenId = event.params.tokenId
-  entity.save()
-}
+export function handleMint(event: Mint): void {
+	let blockNumber = event.block.number
+	let blockId = blockNumber.toString()
+	let txHash = event.transaction.hash
+	let timestamp = event.block.timestamp
 
-export function handleApprovalForAll(event: ApprovalForAllEvent): void {
-  let entity = new ApprovalForAll(
-    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
-  )
-  entity.owner = event.params.owner
-  entity.operator = event.params.operator
-  entity.approved = event.params.approved
-  entity.save()
-}
+	let block = blocks.getOrCreateBlock(blockId, timestamp, blockNumber)
+	block.save()
 
-export function handleRoleAdminChanged(event: RoleAdminChangedEvent): void {
-  let entity = new RoleAdminChanged(
-    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
-  )
-  entity.role = event.params.role
-  entity.previousAdminRole = event.params.previousAdminRole
-  entity.newAdminRole = event.params.newAdminRole
-  entity.save()
-}
+	let meta = transactionsMeta.getOrCreateTransactionMeta(
+		txHash.toHexString(),
+		blockId,
+		txHash,
+		event.transaction.from,
+		event.transaction.gasLimit,
+		event.transaction.gasPrice,
+	)
+	meta.save()
 
-export function handleRoleGranted(event: RoleGrantedEvent): void {
-  let entity = new RoleGranted(
-    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
-  )
-  entity.role = event.params.role
-  entity.account = event.params.account
-  entity.sender = event.params.sender
-  entity.save()
-}
+	let to = event.params._to.toHex()
+	let tokenId = event.params._tokenId.toHex()
 
-export function handleRoleRevoked(event: RoleRevokedEvent): void {
-  let entity = new RoleRevoked(
-    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
-  )
-  entity.role = event.params.role
-  entity.account = event.params.account
-  entity.sender = event.params.sender
-  entity.save()
-}
-
-export function handleTransfer(event: TransferEvent): void {
-  let entity = new Transfer(
-    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
-  )
-  entity.from = event.params.from
-  entity.to = event.params.to
-  entity.tokenId = event.params.tokenId
-  entity.save()
+	token.save()
 }
