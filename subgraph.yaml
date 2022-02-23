@@ -36,7 +36,7 @@ dataSources:
           handler: handleRoleRevoked
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
-      file: ./src/mapping.ts
+      file: ./src/mappings/index.ts
 
   - kind: ethereum
     name: PlanckCatsMinter
@@ -61,4 +61,4 @@ dataSources:
           handler: handleClaim
         - event: Mint(indexed address,uint256)
           handler: handleMint
-      file: ./src/mapping.ts
+      file: ./src/mappings/index.ts

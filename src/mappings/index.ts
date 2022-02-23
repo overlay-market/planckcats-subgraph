@@ -6,7 +6,7 @@ import {
   RoleRevoked as RoleRevokedEvent,
   Transfer as TransferEvent,
   PlanckCatsToken as PlanckCatsMinterContract,
-} from "../generated/PlanckCatsToken/PlanckCatsToken"
+} from "../../generated/PlanckCatsToken/PlanckCatsToken"
 import {
   Approval,
   ApprovalForAll,
@@ -14,7 +14,7 @@ import {
   RoleGranted,
   RoleRevoked,
   Transfer
-} from "../generated/schema"
+} from "../../generated/schema"
 
 export function handleApproval(event: ApprovalEvent): void {
   let entity = new Approval(
