@@ -10,6 +10,8 @@ import {
   Transfer
 } from "../../generated/PlanckCatsToken/PlanckCatsToken";
 
+import { transfer } from "./transfer";
+
 import { 
   tokens,
   blocks,
@@ -67,8 +69,6 @@ export function handleTransfer(event: Transfer): void {
 
 	if (from == ZERO_ADDRESS) {
 		transfer.handleMint(event.params.to, tokenId, timestamp, blockId)
-	} else if (to == ZERO_ADDRESS) {
-		transfer.handleBurn(event.params.from, tokenId, timestamp, blockId)
 	} else {
 		transfer.handleRegularTransfer(event.params.from, event.params.to, tokenId, timestamp, blockId)
 	}
