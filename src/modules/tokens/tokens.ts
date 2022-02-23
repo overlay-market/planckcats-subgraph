@@ -1,7 +1,6 @@
-import { ZERO_ADDRESS } from "../../mappings/constants";
-import { log } from "@graphprotocol/graph-ts";
-import { Token } from "../../../generated/schema";
-
+import { BigInt, log } from "@graphprotocol/graph-ts";
+import { Token, TokenCounter } from "../../../generated/schema";
+import { integer, decimal, DEFAULT_DECIMALS, ZERO_ADDRESS } from '@protofire/subgraph-toolkit'
 export namespace tokens {
 
   export function getOrCreateToken(
@@ -17,6 +16,20 @@ export namespace tokens {
 
 		return token as Token;
 	}
+
+  export function tokenCount(
+    tokenId: string
+  ): TokenCounter {
+    let tokenCounter = TokenCounter.load(ZERO_ADDRESS);
+
+    if (tokenCounter == null) {
+      tokenCounter = new TokenCounter(ZERO_ADDRESS);
+      tokenCounter.totalSupply = integer.ZERO;
+    }
+
+    tokenCounter.totalSupply = BigInt.fromString(tokenId);
+    return tokenCounter as TokenCounter;
+  }
 
   export function loadToken(
     tokenId: string

@@ -6,6 +6,7 @@ import {
 } from "../../generated/PlanckCatsMinter/PlanckCatsMinter";
 
 import { 
+  tokens,
   blocks,
   transactions,
   transactionsMeta
