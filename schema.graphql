@@ -33,7 +33,7 @@ type TransactionMeta @entity {
   gasPrice: BigInt
 }
 
-type ERC721Token @entity {
+interface ERC721Token {
   # tokenId used for indexation
   id: ID!
 
@@ -41,6 +41,12 @@ type ERC721Token @entity {
   owner: Account!
 
   # token's current approval
+  approval: Account
+}
+
+type Token implements ERC721Token @entity {
+  id: ID!
+  owner: Account!
   approval: Account
 }
 
@@ -58,10 +64,10 @@ type Account @entity {
   address: Bytes
 
   # account owned tokens
-  tokens: [ERC721Token!]! @derivedFrom(field: "owner")
+  tokens: [Token!]! @derivedFrom(field: "owner")
 
   # approved tokens
-  approved: [ERC721Token!]! @derivedFrom(field: "approval")
+  approved: [Token!]! @derivedFrom(field: "approval")
 
   # transactions sent from this account
   sent: [Transaction!] @derivedFrom(field: "from")
@@ -94,57 +100,27 @@ interface Transaction {
 
 type Mint implements Transaction @entity {
   id: ID!
-
-  # sender account
   from: Account
-
-  # receipient account
   to: Account
-
-  # token minted
-  token: ERC721Token
-
-  # minting block
+  token: Token
   block: Block!
-
-  # transaction type
   type: TransactionType!
 }
 
 type Claim implements Transaction @entity {
   id: ID!
-
-  # sender account
   from: Account
-
-  # claimer/receipient account
   to: Account
-
-  # token claimed
-  token: ERC721Token
-
-  # claim block
+  token: Token
   block: Block!
-
-  # transaction type
   type: TransactionType!
 }
 
 type Transfer implements Transaction @entity {
   id: ID!
-
-  # sender account
   from: Account
-
-  # receipient account
   to: Account
-
-  # token traded
-  token: ERC721Token
-
-  # transfer block
+  token: Token
   block: Block!
-
-  # transaction type
   type: TransactionType!
 }
