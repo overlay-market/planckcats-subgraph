@@ -1,10 +1,13 @@
 import { ZERO_ADDRESS } from "./constants";
+
 import {
-  Approval,
-  Transfer,
   Mint,
   Claim,
 } from "../../generated/PlanckCatsMinter/PlanckCatsMinter";
+
+import { 
+  blocks
+} from "../modules";
 
 export function handleMint(event: Mint): void {
 	let blockNumber = event.block.number
