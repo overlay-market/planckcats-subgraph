@@ -50,8 +50,9 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - Claim
-        - Mint
+        - Token
+        - Account
+        - TokenManager
       abis:
         - name: PlanckCatsMinter
           file: ./abis/PlanckCatsMinter.json
