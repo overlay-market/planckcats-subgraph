@@ -1,6 +1,6 @@
 
 import { ZERO_ADDRESS } from "@protofire/subgraph-toolkit";
-
+import { MINTER_CONTRACT_ADDRESS } from "./constants";
 import {
   Mint,
   Claim,
@@ -17,7 +17,6 @@ import {
   accounts,
   tokens,
   blocks,
-  transactions,
   transactionsMeta
 } from "../modules";
 
@@ -71,7 +70,9 @@ export function handleTransfer(event: Transfer): void {
 
 	if (from == ZERO_ADDRESS) {
 		transfer.handleMint(event.params.to, tokenId, timestamp, blockId)
-	} else {
+	} else if (from == MINTER_CONTRACT_ADDRESS) {
+    // transfer.handleClaim()
+  } else {
 		transfer.handleRegularTransfer(event.params.from, event.params.to, tokenId, timestamp, blockId)
 	}
 }

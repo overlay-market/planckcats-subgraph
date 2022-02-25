@@ -23,6 +23,15 @@ export namespace transfer {
 		transaction.save();
 	}
 
+  export function handleClaim(
+    to: Bytes,
+    tokenId: string,
+    timestamp: BigInt,
+    blockId: string
+  ): void {
+
+  }
+
 	export function handleRegularTransfer(
     from: Bytes, 
     to: Bytes, 
