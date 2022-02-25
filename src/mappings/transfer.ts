@@ -24,12 +24,23 @@ export namespace transfer {
 	}
 
   export function handleClaim(
+    from: Bytes,
     to: Bytes,
     tokenId: string,
     timestamp: BigInt,
     blockId: string
   ): void {
+    let minterContract = accounts.getOrCreateAccount(from);
+    minterContract.save();
 
+    let owner = accounts.getOrCreateAccount(to);
+    owner.save();
+
+    let token = tokens.changeOwner(tokenId, owner.id);
+    token.save();
+
+    let transaction = transactions.getNewClaim(minterContract.id, owner.id, tokenId, timestamp, blockId);
+    transaction.save();
   }
 
 	export function handleRegularTransfer(
