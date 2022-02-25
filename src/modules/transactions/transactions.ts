@@ -1,4 +1,4 @@
-import { ZERO_ADDRESS } from "../../mappings/constants";
+import { ZERO_ADDRESS } from "@protofire/subgraph-toolkit";
 import { BigInt } from "@graphprotocol/graph-ts";
 import {
   Mint,
@@ -54,7 +54,7 @@ export namespace transactions {
 		transaction.to = to;
 		transaction.token = token;
 		transaction.block = blockId;
-		transaction.type = constants.TRANSACTION_MINT;
+		transaction.type = constants.TRANSACTION_CLAIM;
 
     return transaction as Claim;
   }
