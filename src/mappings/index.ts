@@ -71,7 +71,7 @@ export function handleTransfer(event: Transfer): void {
 	if (from == ZERO_ADDRESS) {
 		transfer.handleMint(event.params.to, tokenId, timestamp, blockId)
 	} else if (from == MINTER_CONTRACT_ADDRESS) {
-    // transfer.handleClaim()
+    transfer.handleClaim(event.params.from, event.params.to, tokenId, timestamp, blockId);
   } else {
 		transfer.handleRegularTransfer(event.params.from, event.params.to, tokenId, timestamp, blockId)
 	}
