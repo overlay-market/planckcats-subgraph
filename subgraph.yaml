@@ -49,8 +49,6 @@ dataSources:
         - name: PlanckCatsMinter
           file: ./abis/PlanckCatsMinter.json
       eventHandlers:
-        - event: Claim(indexed address,uint256)
-          handler: handleClaim
         - event: Mint(indexed address,uint256)
           handler: handleMint
       file: ./src/mappings/index.ts

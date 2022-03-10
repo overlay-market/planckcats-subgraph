@@ -7,7 +7,7 @@ import {
 
 export namespace transfer {
 
-	export function handleMint(
+	export function handleMinting(
     to: Bytes, 
     tokenId: string, 
     timestamp: BigInt, 

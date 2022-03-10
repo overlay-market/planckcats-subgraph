@@ -40,7 +40,7 @@ export function handleMint(event: Mint): void {
 	meta.save();
 
 	let to = event.params.to.toHex();
-	let tokenId = event.params.id.toHex();
+	let tokenId = event.params.id.toString();
 
   let tokenCounter = tokens.tokenCount(tokenId);
 	tokenCounter.save();
@@ -48,8 +48,8 @@ export function handleMint(event: Mint): void {
 
 export function handleTransfer(event: Transfer): void {
 	let from = event.params.from.toHex();
-	let to = event.params.to.toHex();
-	let tokenId = event.params.tokenId.toHex();
+	let to = event.params.to;
+	let tokenId = event.params.tokenId.toString();
 	let blockNumber = event.block.number;
 	let blockId = blockNumber.toString();
 	let txHash = event.transaction.hash;
@@ -69,7 +69,7 @@ export function handleTransfer(event: Transfer): void {
 	meta.save();
 
 	if (from == ZERO_ADDRESS) {
-		transfer.handleMint(event.params.to, tokenId, timestamp, blockId)
+		transfer.handleMinting(event.params.to, tokenId, timestamp, blockId)
 	} else if (from == MINTER_CONTRACT_ADDRESS) {
     transfer.handleClaim(event.params.from, event.params.to, tokenId, timestamp, blockId);
   } else {
